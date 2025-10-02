@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BrightSpark LED Инсталации</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@300;400;700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      color: #e0e0e0;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    header {
+      background: #0a0a0f; 
+      padding: 1.2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(0,255,255,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      color: #00f5ff;
+      text-shadow: 0 0 10px #00f5ff;
+    }
+
+    nav a {
+      color: #e0e0e0;
+      text-decoration: none;
+      margin-left: 2rem;
+      transition: 0.3s;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    nav a:hover {
+      color: #00f5ff;
+      text-shadow: 0 0 8px #00f5ff;
+    }
+
+    main {
+      position: relative;
+      background: radial-gradient(circle at 20% 30%, #1CA9C9, transparent 40%),
+                  radial-gradient(circle at 80% 20%, #7A5FFF, transparent 45%),
+                  radial-gradient(circle at 50% 80%, #FF5EBA, transparent 50%),
+                  linear-gradient(to bottom, #0d0d14 0%, #050509 100%);
+      padding-top: 2rem;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    /* Движещи се линии */
+    .line {
+      position: fixed;
+      width: 2px;
+      height: calc(100% - 80px);
+      top: 80px;
+      background: linear-gradient(to bottom, rgba(0,255,255,0), rgba(0,255,255,0.6), rgba(0,255,255,0));
+      animation: moveLine linear infinite;
+      z-index: -2;
+    }
+    .line:nth-child(1) { left: 10%; animation-duration: 15s; }
+    .line:nth-child(2) { left: 30%; animation-duration: 20s; animation-delay: 5s; }
+    .line:nth-child(3) { left: 50%; animation-duration: 25s; animation-delay: 10s; }
+    .line:nth-child(4) { left: 70%; animation-duration: 18s; animation-delay: 2s; }
+    .line:nth-child(5) { left: 90%; animation-duration: 22s; animation-delay: 7s; }
+
+    @keyframes moveLine {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+
+    section {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      color: #00f5ff;
+      text-shadow: 0 0 15px #00f5ff, 0 0 25px #00ffea;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .service {
+      background: #141420;
+      border: 1px solid rgba(0,255,255,0.15);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .service:hover {
+      transform: translateY(-8px);
+      border-color: #00f5ff;
+      box-shadow: 0 0 20px #00f5ff33;
+    }
+
+    .service h3 {
+      color: #00f5ff;
+      text-shadow: 0 0 10px #00f5ff;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .description {
+      display: none;
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .description p { color: #ddd; margin-bottom: 1rem; }
+    .description img {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00f5ff55;
+      margin-bottom: 1rem;
+    }
+
+    form {
+      max-width: 500px;
+      margin: auto;
+      background: #141420;
+      padding: 2rem;
+      border-radius: 15px;
+      border: 1px solid rgba(0,255,255,0.2);
+      box-shadow: 0 0 20px #00f5ff22;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #00f5ff;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      background: #0d0d14;
+      color: #fff;
+      box-shadow: inset 0 0 10px #00f5ff33;
+    }
+
+    button {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #0a0a0f;
+      background: #00f5ff;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 0 15px #00f5ff, 0 0 40px #00f5ff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #0a0a0f;
+      color: #00f5ff;
+      box-shadow: 0 0 20px #00f5ff, 0 0 50px #00ffea;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #0d0d14;
+      border-top: 1px solid rgba(0,255,255,0.2);
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    /* Цветни частици */
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: floatParticle linear infinite;
+      box-shadow: 0 0 12px currentColor, 0 0 25px currentColor;
+    }
+
+    @keyframes floatParticle {
+      0% { transform: translate(0,0) scale(1); opacity:0.5; }
+      50% { opacity:1; transform: translate(var(--x), var(--y)) scale(1.5); }
+      100% { transform: translate(0,0) scale(1); opacity:0.5; }
+    }
+
+    /* Pop-up описание за "За нас" */
+    #about-popup {
+      display:none;
+      position:fixed;
+      top:80px;
+      left:50%;
+      transform:translateX(-50%);
+      background:#141420;
+      color:#00f5ff;
+      padding:1.5rem 2rem;
+      border-radius:12px;
+      border:1px solid #00f5ff;
+      box-shadow:0 0 20px #00f5ff;
+      z-index:1001;
+      max-width:500px;
+      text-align:center;
+    }
+    #about-popup button {
+      margin-top:1rem;
+      padding:0.5rem 1rem;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      background:#00f5ff;
+      color:#0a0a0f;
+      font-weight:bold;
+      box-shadow:0 0 10px #00f5ff;
+    }
+
+    /* Галерии за About и Услуги */
+    .about-gallery, .service-gallery {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .about-gallery img, .service-gallery img {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00f5ff33;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .about-gallery img:hover, .service-gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00f5ff66;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Движещи се линии -->
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+
+  <header>
+    <h1>BrightSpark LED Инсталации</h1>
+    <nav>
+      <a id="about-btn">За нас</a>
+      <a href="#services">Услуги</a>
+      <a href="#contact">Контакт</a>
+    </nav>
+  </header>
+
+  <!-- Pop-up описание за "За нас" -->
+  <div id="about-popup">
+    <p>Ние сме екип от професионалисти на пазара вече 3 години. Имаме реализирани няколко успешни проекта, които осветляват домове и бизнеси с модерни LED решения.</p>
+    <button onclick="closeAbout()">Затвори</button>
+  </div>
+
+  <main>
+    <section id="about">
+      <h2>За нас</h2>
+      <p>Ние сме специализирани в професионални LED осветителни инсталации за домове и бизнеси. Енергийно ефективни, модерни и достъпни решения.</p>
+
+      <div class="about-gallery">
+        <img src="images/team1.jpg" alt="Екип 1">
+        <img src="images/team2.jpg" alt="Екип 2">
+        <img src="images/project1.jpg" alt="Проект 1">
+      </div>
+    </section>
+
+    <section id="services">
+      <h2>Нашите услуги</h2>
+
+      <div class="service" onclick="toggleDescription('home')">
+        <h3>LED инсталация за дома</h3>
+        <div id="desc-home" class="description">
+          <p>Модерно и енергийно ефективно LED осветление за вашия дом, с персонализиран дизайн и монтаж.</p>
+          <img src="images/home-led.jpg" alt="LED осветление у дома">
+          <div class="service-gallery">
+            <img src="images/home1.jpg" alt="Дом LED 1">
+            <img src="images/home2.jpg" alt="Дом LED 2">
+          </div>
+        </div>
+      </div>
+
+      <div class="service" onclick="toggleDescription('commercial')">
+        <h3>LED осветление за търговски обекти</h3>
+        <div id="desc-commercial" class="description">
+          <p>Професионално LED осветление за магазини, офиси и други бизнес пространства.</p>
+          <img src="images/commercial-led.jpg" alt="Търговско LED осветление">
+          <div class="service-gallery">
+            <img src="images/commercial1.jpg" alt="Бизнес LED 1">
+            <img src="images/commercial2.jpg" alt="Бизнес LED 2">
+          </div>
+        </div>
+      </div>
+
+      <div class="service" onclick="toggleDescription('strip')">
+        <h3>Дизайн на LED лентово осветление</h3>
+        <div id="desc-strip" class="description">
+          <p>Креативни решения с LED ленти – за атмосфера, акценти или декоративно осветление.</p>
+          <img src="images/led-strip.jpg" alt="LED лента дизайн">
+          <div class="service-gallery">
+            <img src="images/strip1.jpg" alt="LED Лента 1">
+            <img src="images/strip2.jpg" alt="LED Лента 2">
+          </div>
+        </div>
+      </div>
+
+      <div class="service" onclick="toggleDescription('consult')">
+        <h3>Енергийна консултация</h3>
+        <div id="desc-consult" class="description">
+          <p>Помагаме ви да изберете най-ефективното LED решение, според вашите нужди и бюджет.</p>
+          <img src="images/energy-consult.jpg" alt="Енергийна консултация">
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Свържете се с нас</h2>
+      <form action="https://formspree.io/f/your-form-id" method="POST">
+        <label for="name">Име:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Имейл:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Съобщение:</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+
+        <button type="submit">Изпрати</button>
+      </form>
+      <p style="margin-top:1rem;">Имейл: info@brightsparkled.com | Телефон: +359876867016</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 BrightSpark LED Инсталации</p>
+  </footer>
+
+  <script>
+    // Toggle описание за услуги
+    function toggleDescription(id) {
+      const desc = document.getElementById("desc-" + id);
+      if (desc.style.display === "block") {
+        desc.style.display = "none";
+      } else {
+        desc.style.display = "block";
+      }
+    }
+
+    // Показване на поп-ъп "За нас"
+    const aboutBtn = document.getElementById('about-btn');
+    const aboutPopup = document.getElementById('about-popup');
+    aboutBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      aboutPopup.style.display = 'block';
+    });
+    function closeAbout() {
+      aboutPopup.style.display = 'none';
+    }
+
+    // Създаваме цветни светещи точки
+    const colors = ["#00f5ff", "#ff5eba", "#7A5FFF", "#39ff14", "#ffaa00"];
+    const main = document.querySelector('main');
+    const numParticles = 60;
+    for (let i = 0; i < numParticles; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      const x = Math.random() * main.offsetWidth;
+      const y = Math.random() * main.offsetHeight;
+      p.style.left = x + 'px';
+      p.style.top = y + 'px';
+      const dx = (Math.random() - 0.5) * 200; 
+      const dy = (Math.random() - 0.5) * 200;
+      p.style.setProperty('--x', dx + 'px');
+      p.style.setProperty('--y', dy + 'px');
+      const duration = 6 + Math.random() * 6;
+      p.style.animationDuration = duration + 's';
+      p.style.color = colors[Math.floor(Math.random() * colors.length)];
+      main.appendChild(p);
+    }
+  </script>
+</body>
+</html>
